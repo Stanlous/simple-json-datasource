@@ -66,9 +66,12 @@ System.register(['lodash'], function (_export, _context) {
             var templateSrv = this.templateSrv;
             if (templateSrv && templateSrv.variables) {
               if (Object.prototype.toString.call(templateSrv.variables) === '[object Array]') {
-                query.variables = {};
+                query.variables = [];
                 templateSrv.variables.forEach(function (el) {
-                  query.variables[el.name] = el.current.value;
+                  query.variables.push({
+                    name: el.name,
+                    value: el.current.value
+                  });
                 });
               }
             }
