@@ -24,6 +24,16 @@ export class GenericDatasource {
       return this.q.when({data: []});
     }
 
+    var templateSrv = this.templateSrv
+    if (templateSrv && templateSrv.variables) {
+      if (Object.prototype.toString.call(templateSrv.variables) === '[object Array]') {
+        query.variables = {}
+        templateSrv.variables.forEach((el) => {
+          query.variables[el.name] = el.current.value
+        })
+      }
+    }
+
     return this.doRequest({
       url: this.url + '/query',
       data: query,
